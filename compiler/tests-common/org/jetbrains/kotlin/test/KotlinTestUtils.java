@@ -49,6 +49,10 @@ import org.jetbrains.annotations.TestOnly;
 import org.jetbrains.kotlin.analyzer.AnalysisResult;
 import org.jetbrains.kotlin.builtins.DefaultBuiltIns;
 import org.jetbrains.kotlin.builtins.KotlinBuiltIns;
+import org.jetbrains.kotlin.cli.common.CLIConfigurationKeys;
+import org.jetbrains.kotlin.cli.common.messages.CompilerMessageLocation;
+import org.jetbrains.kotlin.cli.common.messages.CompilerMessageSeverity;
+import org.jetbrains.kotlin.cli.common.messages.MessageCollector;
 import org.jetbrains.kotlin.cli.jvm.compiler.EnvironmentConfigFiles;
 import org.jetbrains.kotlin.cli.jvm.compiler.KotlinCoreEnvironment;
 import org.jetbrains.kotlin.cli.jvm.config.JvmContentRootsKt;
@@ -428,6 +432,30 @@ public class KotlinTestUtils {
     public static CompilerConfiguration newConfiguration() {
         CompilerConfiguration configuration = new CompilerConfiguration();
         configuration.put(CommonConfigurationKeys.MODULE_NAME, TEST_MODULE_NAME);
+
+        configuration.put(CLIConfigurationKeys.MESSAGE_COLLECTOR_KEY, new MessageCollector() {
+            @Override
+            public void clear() {
+            }
+
+            @Override
+            public void report(
+                    @NotNull CompilerMessageSeverity severity, @NotNull String message, @Nullable CompilerMessageLocation location
+            ) {
+                if (severity == CompilerMessageSeverity.ERROR) {
+                    String prefix = location == null
+                                  ? ""
+                                  : "(" + location.getPath() + ":" + location.getLine() + ":" + location.getColumn() + ") ";
+                    throw new AssertionError(prefix + message);
+                }
+            }
+
+            @Override
+            public boolean hasErrors() {
+                return false;
+            }
+        });
+
         return configuration;
     }
 
@@ -462,7 +490,7 @@ public class KotlinTestUtils {
             JvmContentRootsKt.addJvmClasspathRoots(configuration, PathUtil.getJdkClassesRoots(getJreHome("JDK_16")));
         }
         else if (jdkKind == TestJdkKind.FULL_JDK_9) {
-            JvmContentRootsKt.addJvmClasspathRoots(configuration, PathUtil.getJdkClassesRoots(getJreHome("JDK_9")));
+            configuration.put(JVMConfigurationKeys.JDK_HOME, new File(getJreHome("JDK_9")));
         }
         else {
             JvmContentRootsKt.addJvmClasspathRoots(configuration, PathUtil.getJdkClassesRoots());
