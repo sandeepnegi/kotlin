@@ -11473,6 +11473,63 @@ public class IntentionTestGenerated extends AbstractIntentionTest {
         }
     }
 
+    @TestMetadata("idea/testData/intentions/moveSuspiciousCallableReferenceIntoParentheses")
+    @TestDataPath("$PROJECT_ROOT")
+    @RunWith(JUnit3RunnerWithInners.class)
+    public static class MoveSuspiciousCallableReferenceIntoParentheses extends AbstractIntentionTest {
+        public void testAllFilesPresentInMoveSuspiciousCallableReferenceIntoParentheses() throws Exception {
+            KotlinTestUtils.assertAllTestsPresentByMetadata(this.getClass(), new File("idea/testData/intentions/moveSuspiciousCallableReferenceIntoParentheses"), Pattern.compile("^([\\w\\-_]+)\\.kt$"), TargetBackend.ANY, true);
+        }
+
+        @TestMetadata("defaultParameter.kt")
+        public void testDefaultParameter() throws Exception {
+            String fileName = KotlinTestUtils.navigationMetadata("idea/testData/intentions/moveSuspiciousCallableReferenceIntoParentheses/defaultParameter.kt");
+            doTest(fileName);
+        }
+
+        @TestMetadata("it.kt")
+        public void testIt() throws Exception {
+            String fileName = KotlinTestUtils.navigationMetadata("idea/testData/intentions/moveSuspiciousCallableReferenceIntoParentheses/it.kt");
+            doTest(fileName);
+        }
+
+        @TestMetadata("lambdaWithArg.kt")
+        public void testLambdaWithArg() throws Exception {
+            String fileName = KotlinTestUtils.navigationMetadata("idea/testData/intentions/moveSuspiciousCallableReferenceIntoParentheses/lambdaWithArg.kt");
+            doTest(fileName);
+        }
+
+        @TestMetadata("multipleLines.kt")
+        public void testMultipleLines() throws Exception {
+            String fileName = KotlinTestUtils.navigationMetadata("idea/testData/intentions/moveSuspiciousCallableReferenceIntoParentheses/multipleLines.kt");
+            doTest(fileName);
+        }
+
+        @TestMetadata("noBody.kt")
+        public void testNoBody() throws Exception {
+            String fileName = KotlinTestUtils.navigationMetadata("idea/testData/intentions/moveSuspiciousCallableReferenceIntoParentheses/noBody.kt");
+            doTest(fileName);
+        }
+
+        @TestMetadata("noneCallableRef.kt")
+        public void testNoneCallableRef() throws Exception {
+            String fileName = KotlinTestUtils.navigationMetadata("idea/testData/intentions/moveSuspiciousCallableReferenceIntoParentheses/noneCallableRef.kt");
+            doTest(fileName);
+        }
+
+        @TestMetadata("normal.kt")
+        public void testNormal() throws Exception {
+            String fileName = KotlinTestUtils.navigationMetadata("idea/testData/intentions/moveSuspiciousCallableReferenceIntoParentheses/normal.kt");
+            doTest(fileName);
+        }
+
+        @TestMetadata("parameter.kt")
+        public void testParameter() throws Exception {
+            String fileName = KotlinTestUtils.navigationMetadata("idea/testData/intentions/moveSuspiciousCallableReferenceIntoParentheses/parameter.kt");
+            doTest(fileName);
+        }
+    }
+
     @TestMetadata("idea/testData/intentions/moveToCompanion")
     @TestDataPath("$PROJECT_ROOT")
     @RunWith(JUnit3RunnerWithInners.class)
