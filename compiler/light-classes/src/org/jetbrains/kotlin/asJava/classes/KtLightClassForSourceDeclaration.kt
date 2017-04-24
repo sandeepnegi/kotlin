@@ -24,6 +24,7 @@ import com.intellij.openapi.util.Comparing
 import com.intellij.openapi.util.Key
 import com.intellij.psi.*
 import com.intellij.psi.impl.java.stubs.PsiJavaFileStub
+import com.intellij.psi.impl.source.PsiImmediateClassType
 import com.intellij.psi.scope.PsiScopeProcessor
 import com.intellij.psi.search.SearchScope
 import com.intellij.psi.stubs.IStubElementType
@@ -42,9 +43,9 @@ import org.jetbrains.kotlin.asJava.builder.LightClassData
 import org.jetbrains.kotlin.asJava.builder.LightClassDataHolder
 import org.jetbrains.kotlin.asJava.builder.LightClassDataProviderForClassOrObject
 import org.jetbrains.kotlin.asJava.elements.FakeFileForLightClass
-import org.jetbrains.kotlin.asJava.elements.KtLightSimpleModifierList
 import org.jetbrains.kotlin.asJava.elements.KtLightIdentifier
 import org.jetbrains.kotlin.asJava.elements.KtLightPsiReferenceList
+import org.jetbrains.kotlin.asJava.elements.KtLightSimpleModifierList
 import org.jetbrains.kotlin.asJava.hasInterfaceDefaultImpls
 import org.jetbrains.kotlin.builtins.KotlinBuiltIns
 import org.jetbrains.kotlin.descriptors.ClassDescriptor
@@ -59,8 +60,6 @@ import org.jetbrains.kotlin.psi.debugText.getDebugText
 import org.jetbrains.kotlin.psi.psiUtil.getElementTextWithContext
 import org.jetbrains.kotlin.psi.stubs.KotlinClassOrObjectStub
 import org.jetbrains.kotlin.resolve.DescriptorUtils
-import org.jetbrains.kotlin.resolve.descriptorUtil.fqNameUnsafe
-import org.jetbrains.kotlin.utils.ifEmpty
 import java.util.*
 import javax.swing.Icon
 
@@ -416,11 +415,26 @@ abstract class KtLightClassForSourceDeclaration(protected val classOrObject: KtC
     }
 
     override fun getSupers(): Array<PsiClass> {
-        val descriptor = LightClassGenerationSupport.getInstance(project).resolveToDescriptor(classOrObject) as? ClassDescriptor ?: return clsDelegate.supers
-        return descriptor.typeConstructor.supertypes.map {
-            val classFqName = it.constructor.declarationDescriptor?.fqNameUnsafe?.asString() ?: return clsDelegate.supers
-            JavaPsiFacade.getInstance(project).findClass(classFqName, resolveScope) as? PsiClass
-        }.filterNotNull().ifEmpty<PsiClass, Collection<PsiClass>> {  JavaPsiFacade.getInstance(project).findClass(CommonClassNames.JAVA_LANG_OBJECT, resolveScope)!!.let(::listOf) }.toTypedArray()
+        if (classOrObject.superTypeListEntries.isEmpty()) {
+            return getSupertypeByPsi()?.let { arrayOf(it.resolve()!!) } ?: emptyArray()
+        }
+        return clsDelegate.supers
+    }
+
+    override fun getSuperTypes(): Array<PsiClassType> {
+        if (classOrObject.superTypeListEntries.isEmpty()) {
+            return getSupertypeByPsi()?.let { arrayOf(it as PsiClassType) } ?: emptyArray()
+        }
+        return clsDelegate.superTypes
+    }
+
+    private fun getSupertypeByPsi(): PsiImmediateClassType? {
+        return classOrObject.defaultJavaAncestorQualifiedName()?.let {
+            ancestorFqName ->
+            JavaPsiFacade.getInstance(project).findClass(ancestorFqName, resolveScope)?.let {
+                PsiImmediateClassType(it, PsiSubstitutor.EMPTY) // TODO: correct substitutor for enum
+            }
+        }
     }
 
     override val originKind: LightClassOriginKind
@@ -451,4 +465,13 @@ interface LightClassInheritanceHelper {
     }
 }
 
+fun KtClassOrObject.defaultJavaAncestorQualifiedName(): String? {
+    if (this !is KtClass) return CommonClassNames.JAVA_LANG_OBJECT
 
+    return when {
+        isAnnotation() -> CommonClassNames.JAVA_LANG_ANNOTATION_ANNOTATION
+        isEnum() -> CommonClassNames.JAVA_LANG_ENUM
+        isInterface() -> CommonClassNames.JAVA_LANG_OBJECT // see com.intellij.psi.impl.PsiClassImplUtil.getSuperClass
+        else -> CommonClassNames.JAVA_LANG_OBJECT
+    }
+}

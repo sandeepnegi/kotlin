@@ -16,11 +16,13 @@
 
 package org.jetbrains.kotlin.idea.caches.resolve.lightClasses
 
+import com.intellij.psi.CommonClassNames
 import com.intellij.psi.PsiClass
 import org.jetbrains.kotlin.asJava.ImpreciseResolveResult
 import org.jetbrains.kotlin.asJava.ImpreciseResolveResult.*
 import org.jetbrains.kotlin.asJava.classes.KtLightClassForSourceDeclaration
 import org.jetbrains.kotlin.asJava.classes.LightClassInheritanceHelper
+import org.jetbrains.kotlin.asJava.classes.defaultJavaAncestorQualifiedName
 import org.jetbrains.kotlin.idea.search.PsiBasedClassResolver
 import org.jetbrains.kotlin.psi.*
 
@@ -30,10 +32,18 @@ class IdeLightClassInheritanceHelper : LightClassInheritanceHelper {
             baseClass: PsiClass,
             checkDeep: Boolean
     ): ImpreciseResolveResult {
-        val entries = lightClass.kotlinOrigin.superTypeListEntries
+        val classOrObject = lightClass.kotlinOrigin
+        val entries = classOrObject.superTypeListEntries
+        val hasSuperClass = entries.any { it is KtSuperTypeCallEntry }
+        if (baseClass.qualifiedName == classOrObject.defaultJavaAncestorQualifiedName() && (!hasSuperClass || checkDeep)) {
+            return MATCH
+        }
+        if (checkDeep && baseClass.qualifiedName == CommonClassNames.JAVA_LANG_OBJECT) {
+            return MATCH
+        }
         val amongEntries = isAmongEntries(baseClass, entries)
         return when {
-            entries.isEmpty() || !checkDeep -> amongEntries // TODO: check for implicit inheritance
+            !checkDeep -> amongEntries
             amongEntries == MATCH -> MATCH
             else -> UNSURE
         }
@@ -58,4 +68,3 @@ class IdeLightClassInheritanceHelper : LightClassInheritanceHelper {
         return NO_MATCH
     }
 }
-
