@@ -1,0 +1,7 @@
+Usage: kotlinc-js-dce <options> <source files>
+where possible options include:
+  -output-dir <path>         Output directory
+  -help (-h)                 Print a synopsis of standard options
+  -X                         Print a synopsis of advanced options
+  -version                   Display compiler version
+OK
