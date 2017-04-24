@@ -17,7 +17,9 @@
 package org.jetbrains.kotlin.asJava.classes
 
 import com.google.common.collect.Lists
+import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.diagnostic.Logger
+import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.Comparing
 import com.intellij.openapi.util.Key
 import com.intellij.psi.*
@@ -31,6 +33,8 @@ import com.intellij.psi.util.CachedValuesManager
 import com.intellij.util.IncorrectOperationException
 import com.intellij.util.containers.ContainerUtil
 import org.jetbrains.annotations.NonNls
+import org.jetbrains.kotlin.asJava.ImpreciseResolveResult
+import org.jetbrains.kotlin.asJava.ImpreciseResolveResult.UNSURE
 import org.jetbrains.kotlin.asJava.LightClassGenerationSupport
 import org.jetbrains.kotlin.asJava.LightClassUtil
 import org.jetbrains.kotlin.asJava.builder.InvalidLightClassDataHolder
@@ -55,6 +59,8 @@ import org.jetbrains.kotlin.psi.debugText.getDebugText
 import org.jetbrains.kotlin.psi.psiUtil.getElementTextWithContext
 import org.jetbrains.kotlin.psi.stubs.KotlinClassOrObjectStub
 import org.jetbrains.kotlin.resolve.DescriptorUtils
+import org.jetbrains.kotlin.resolve.descriptorUtil.fqNameUnsafe
+import org.jetbrains.kotlin.utils.ifEmpty
 import java.util.*
 import javax.swing.Icon
 
@@ -174,12 +180,7 @@ abstract class KtLightClassForSourceDeclaration(protected val classOrObject: KtC
 
     override fun getName(): String? = classOrObject.nameAsName?.asString()
 
-    private val _modifierList: PsiModifierList by lazyPub {
-        object : KtLightModifierListWithExplicitModifiers(this@KtLightClassForSourceDeclaration, computeModifiers()) {
-            override val delegate: PsiAnnotationOwner
-                get() = this@KtLightClassForSourceDeclaration.delegate.modifierList!!
-        }
-    }
+    private val _modifierList: PsiModifierList by lazyPub { KtLightModifierListWithExplicitModifiers(this@KtLightClassForSourceDeclaration, computeModifiers()) }
 
     override fun getModifierList(): PsiModifierList? = _modifierList
 
@@ -274,6 +275,8 @@ abstract class KtLightClassForSourceDeclaration(protected val classOrObject: KtC
     override fun isValid(): Boolean = classOrObject.isValid
 
     override fun isInheritor(baseClass: PsiClass, checkDeep: Boolean): Boolean {
+        LightClassInheritanceHelper.getService(project).isInheritor(this, baseClass, checkDeep).ifSure { return it }
+
         val qualifiedName: String?
         if (baseClass is KtLightClassForSourceDeclaration) {
             val baseDescriptor = baseClass.getDescriptor()
@@ -412,6 +415,14 @@ abstract class KtLightClassForSourceDeclaration(protected val classOrObject: KtC
         private val LOG = Logger.getInstance(KtLightClassForSourceDeclaration::class.java)
     }
 
+    override fun getSupers(): Array<PsiClass> {
+        val descriptor = LightClassGenerationSupport.getInstance(project).resolveToDescriptor(classOrObject) as? ClassDescriptor ?: return clsDelegate.supers
+        return descriptor.typeConstructor.supertypes.map {
+            val classFqName = it.constructor.declarationDescriptor?.fqNameUnsafe?.asString() ?: return clsDelegate.supers
+            JavaPsiFacade.getInstance(project).findClass(classFqName, resolveScope) as? PsiClass
+        }.filterNotNull().ifEmpty<PsiClass, Collection<PsiClass>> {  JavaPsiFacade.getInstance(project).findClass(CommonClassNames.JAVA_LANG_OBJECT, resolveScope)!!.let(::listOf) }.toTypedArray()
+    }
+
     override val originKind: LightClassOriginKind
         get() = LightClassOriginKind.SOURCE
 }
@@ -422,4 +433,22 @@ fun getOutermostClassOrObject(classOrObject: KtClassOrObject): KtClassOrObject {
 
     return outermostClass
 }
+
+interface LightClassInheritanceHelper {
+    fun isInheritor(
+            lightClass: KtLightClassForSourceDeclaration,
+            baseClass: PsiClass,
+            checkDeep: Boolean
+    ): ImpreciseResolveResult
+
+    object NoHelp : LightClassInheritanceHelper {
+        override fun isInheritor(lightClass: KtLightClassForSourceDeclaration, baseClass: PsiClass, checkDeep: Boolean) = UNSURE
+    }
+
+    companion object {
+        fun getService(project: Project): LightClassInheritanceHelper =
+                ServiceManager.getService(project, LightClassInheritanceHelper::class.java) ?: NoHelp
+    }
+}
+
 
