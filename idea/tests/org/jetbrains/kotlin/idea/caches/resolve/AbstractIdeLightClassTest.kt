@@ -28,10 +28,7 @@ import org.jetbrains.kotlin.asJava.builder.LightClassConstructionContext
 import org.jetbrains.kotlin.asJava.builder.StubComputationTracker
 import org.jetbrains.kotlin.asJava.classes.KtLightClass
 import org.jetbrains.kotlin.asJava.classes.KtLightClassForSourceDeclaration
-import org.jetbrains.kotlin.asJava.elements.KtLightAbstractAnnotation
-import org.jetbrains.kotlin.asJava.elements.KtLightElement
-import org.jetbrains.kotlin.asJava.elements.KtLightField
-import org.jetbrains.kotlin.asJava.elements.KtLightMethod
+import org.jetbrains.kotlin.asJava.elements.*
 import org.jetbrains.kotlin.idea.KotlinDaemonAnalyzerTestCase
 import org.jetbrains.kotlin.idea.caches.resolve.LightClassLazinessChecker.Tracker.Level.*
 import org.jetbrains.kotlin.idea.caches.resolve.lightClasses.IDELightClassConstructionContext
@@ -228,6 +225,9 @@ object LightClassLazinessChecker {
                 val delegate = (method as KtLightMethod).clsDelegate
                 assertEquals(methodInfo(delegate, lazinessMode), lightMethodInfo)
                 checkAnnotationConsistency(method)
+                method.parameterList.parameters.forEach {
+                    checkAnnotationConsistency(it as KtLightParameter)
+                }
             }
 
             assertEquals(classInfo(lightClass.clsDelegate), classInfo)
