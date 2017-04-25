@@ -64,19 +64,26 @@ class KtLightSimpleModifierList(
     override fun copy() = KtLightSimpleModifierList(owner, modifiers)
 }
 
-private fun computeAnnotations(
-        annotationOwner: KtLightElement<*, PsiModifierList>
-): List<KtLightAnnotation> {
-    val lightOwner = annotationOwner.parent as? KtLightElement<*, *>
-    val declaration = lightOwner?.kotlinOrigin as? KtDeclaration
-    if (declaration != null && !declaration.isValid) return emptyList()
+private fun computeAnnotations(lightModifierList: KtLightModifierList<*>): List<PsiAnnotation> {
+    val annotationsForEntries = lightAnnotationsForEntries(lightModifierList)
+    val modifierListOwner = lightModifierList.parent
+    if (modifierListOwner is KtLightMember<*> || modifierListOwner is KtLightParameter) {
+        return annotationsForEntries +
+               @Suppress("UNCHECKED_CAST")
+               listOf(KtLightNullabilityAnnotation(modifierListOwner as KtLightElement<*, PsiModifierListOwner>, lightModifierList))
+    }
+    return annotationsForEntries
+}
 
-    val annotationDescriptors = getAnnotationDescriptors(declaration, lightOwner)
-    return annotationDescriptors.map { descriptor ->
+private fun lightAnnotationsForEntries(lightModifierList: KtLightModifierList<*>): List<KtLightAnnotationForSourceEntry> {
+    val annotatedKtDeclaration = lightModifierList.parent.kotlinOrigin as? KtDeclaration
+    if (annotatedKtDeclaration == null || !annotatedKtDeclaration.isValid) return emptyList()
+
+    return getAnnotationDescriptors(annotatedKtDeclaration, lightModifierList).map { descriptor ->
         val annotationFqName = descriptor.type.constructor.declarationDescriptor?.fqNameUnsafe?.asString() ?: return emptyList()
         val entry = descriptor.source.getPsi() as? KtAnnotationEntry ?: return emptyList()
-        KtLightAnnotation(annotationFqName, entry, annotationOwner) {
-            annotationOwner.clsDelegate.findAnnotation(annotationFqName) ?: error("Couldn't find delegate annotation for $annotationFqName")
+        KtLightAnnotationForSourceEntry(annotationFqName, entry, lightModifierList) {
+            lightModifierList.clsDelegate.findAnnotation(annotationFqName) ?: KtLightNonExistentAnnotation(lightModifierList)
         }
     }
 }
