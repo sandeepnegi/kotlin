@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 509
 // NO_INLINE
 package foo
 

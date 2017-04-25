@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 513
 class Outer() {
     val s = "xyzzy"
 

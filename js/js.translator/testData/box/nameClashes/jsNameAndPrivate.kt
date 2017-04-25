@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 509
 package foo
 
 @JsName("bar") fun foo(x: Int) = x

@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 506
 package foo
 
 var c = 0

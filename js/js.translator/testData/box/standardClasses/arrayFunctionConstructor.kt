@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 508
 package foo
 
 val f = { i: Int -> i + 1 }

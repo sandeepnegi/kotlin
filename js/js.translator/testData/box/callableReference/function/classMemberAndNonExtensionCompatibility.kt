@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 512
 package foo
 
 fun run(a: A, arg: String, funRef:(A, String) -> String): String {

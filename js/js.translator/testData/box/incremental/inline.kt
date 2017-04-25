@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 502
 // FILE: a.kt
 
 private inline fun bar(f: () -> String): String = "bar(${f()})"

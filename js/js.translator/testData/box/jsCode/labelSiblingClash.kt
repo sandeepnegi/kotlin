@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 507
 package foo
 
 // CHECK_LABELS_COUNT: function=box name=block count=2

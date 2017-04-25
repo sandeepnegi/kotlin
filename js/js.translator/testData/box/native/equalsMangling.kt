@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 513
 data class A(val number: Int)
 
 external fun foo(first: A, second: A): Boolean

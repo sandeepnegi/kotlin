@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 507
 package foo
 
 // test String template must have one or more entries.

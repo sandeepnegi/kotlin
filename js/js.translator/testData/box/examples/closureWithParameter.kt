@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 504
 fun box(): String {
     return apply("OK", { arg: String -> arg })
 }

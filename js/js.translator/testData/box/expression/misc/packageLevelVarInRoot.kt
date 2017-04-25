@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 504
 var c = 2
 
 fun incC(i: Int) {

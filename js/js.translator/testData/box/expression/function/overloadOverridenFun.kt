@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 515
 // KT-2219 if function overload overridden function its name doesn't translated correctly
 
 package foo

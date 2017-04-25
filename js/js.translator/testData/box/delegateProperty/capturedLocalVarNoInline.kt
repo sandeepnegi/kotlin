@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 513
 //TODO: reuse same tests from JVM backend
 package foo
 

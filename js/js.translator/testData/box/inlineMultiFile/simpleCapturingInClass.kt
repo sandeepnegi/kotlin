@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 512
 /*
  * Copy of JVM-backend test
  * Found at: compiler/testData/codegen/boxInline/capture/simpleCapturingInClass.1.kt

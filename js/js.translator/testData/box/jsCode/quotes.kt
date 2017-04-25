@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 510
 package foo
 
 fun singleQuoted(i: Int): Int = js("return i")

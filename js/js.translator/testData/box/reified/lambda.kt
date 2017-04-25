@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 874
 package foo
 
 // CHECK_CALLED: doFilter

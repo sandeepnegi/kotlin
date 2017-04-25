@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 509
 package foo
 
 inline fun<T> with1(value: T, p: T.() -> Unit) = value.p()

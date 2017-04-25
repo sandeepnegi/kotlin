@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 517
 package foo
 
 class CC(val s: CharSequence) : CharSequence by s, MyCharSequence {}

@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 509
 package foo
 
 class Point(val x: Int, val y: Int) {

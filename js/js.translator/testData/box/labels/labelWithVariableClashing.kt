@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 509
 package foo
 
 // CHECK_LABELS_COUNT: function=test1 name=loop count=1

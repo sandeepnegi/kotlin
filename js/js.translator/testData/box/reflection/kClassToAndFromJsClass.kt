@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 579
 package foo
 
 import kotlin.reflect.KClass

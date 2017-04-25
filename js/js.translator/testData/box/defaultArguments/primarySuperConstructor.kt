@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 515
 package foo
 
 open class Base(a: Int, b: Int = 3) {

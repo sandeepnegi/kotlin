@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 878
 package foo
 
 object EmptyObject {}

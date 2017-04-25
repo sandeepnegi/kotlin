@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 511
 class C() {
     companion object {
         fun create() = C()

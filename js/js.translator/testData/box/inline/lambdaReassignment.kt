@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 511
 package foo
 
 inline fun run(func: () -> Int): Int {

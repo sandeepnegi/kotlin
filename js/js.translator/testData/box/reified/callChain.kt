@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 511
 package foo
 
 // CHECK_NOT_CALLED: test

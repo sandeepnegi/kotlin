@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 581
 package foo
 
 class undefined

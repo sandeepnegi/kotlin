@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 510
 // MODULE: module1
 // FILE: bar.kt
 // MODULE_KIND: PLAIN

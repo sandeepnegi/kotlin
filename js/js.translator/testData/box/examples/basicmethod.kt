@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 858
 
 interface Tr {
     fun extra(): String = "_"

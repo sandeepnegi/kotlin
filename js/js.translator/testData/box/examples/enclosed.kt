@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 542
 interface BK {
     fun x(): Int = 50
 }

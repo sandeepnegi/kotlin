@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 514
 package foo
 
 fun add(a: Int, b: Int): Int {

@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 511
 package foo
 
 // CHECK_VARS_COUNT: function=test1 count=0

@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 504
 external interface I {
     fun foo(): String
 }

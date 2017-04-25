@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 513
 package foo
 
 class A(val x: Int = fizz(1) + 1) {

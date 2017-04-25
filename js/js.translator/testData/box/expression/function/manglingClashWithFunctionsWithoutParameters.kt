@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 529
 package foo
 
 fun foo(i: Int): String = "foo" + i

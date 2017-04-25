@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 503
 package foo
 
 fun <T> T.toPrefixedString(prefix: String = "", suffix: String = "") = prefix + toString() + suffix

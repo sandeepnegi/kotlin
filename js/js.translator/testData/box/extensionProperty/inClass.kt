@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 510
 class A
 
 class B {

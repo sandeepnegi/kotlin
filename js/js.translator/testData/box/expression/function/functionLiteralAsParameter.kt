@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 504
 package foo
 
 fun apply(f: (Int) -> Int, t: Int): Int {

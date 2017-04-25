@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 508
 package foo
 
 fun bar(i: Int = 0): Int {

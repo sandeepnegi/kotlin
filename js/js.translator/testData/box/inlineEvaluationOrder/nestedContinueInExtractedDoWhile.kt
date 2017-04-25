@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 510
 package foo
 
 private inline fun bar(predicate: (Int) -> Boolean) {

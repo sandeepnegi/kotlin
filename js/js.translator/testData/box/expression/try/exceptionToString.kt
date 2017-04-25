@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 522
 package foo
 
 class MyException(m: String? = null): Exception(m)

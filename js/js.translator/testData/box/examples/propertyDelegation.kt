@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 522
 open class Base() {
     val plain = 239
     public val read: Int

@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 517
 package foo
 
 @JsName("Object")

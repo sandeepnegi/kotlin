@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 510
 package foo
 
 // CHECK_CONTAINS_NO_CALLS: multiplyInline except=imul

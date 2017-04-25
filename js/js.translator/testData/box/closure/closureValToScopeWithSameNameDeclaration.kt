@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 504
 package foo
 
 val f = true

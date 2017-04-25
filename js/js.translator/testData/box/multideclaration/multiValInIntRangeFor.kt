@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 504
 package foo
 
 operator fun Int.component1(): Int {

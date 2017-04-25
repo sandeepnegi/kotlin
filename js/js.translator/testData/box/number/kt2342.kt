@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 503
 package foo
 
 fun test(a: Int, b: Int, expected: Int): String {

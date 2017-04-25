@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 532
 package foo
 
 class A() {

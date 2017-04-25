@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 510
 package foo
 
 fun box(): String {

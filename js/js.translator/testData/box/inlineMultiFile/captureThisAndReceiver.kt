@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 507
 /*
  * Copy of JVM-backend test
  * Found at: compiler/testData/codegen/boxInline/capture/captureThisAndReceiver.1.kt

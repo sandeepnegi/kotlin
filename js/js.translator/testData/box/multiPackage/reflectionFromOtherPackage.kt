@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 524
 // FILE: a.kt
 package bar
 

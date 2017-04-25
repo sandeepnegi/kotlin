@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 504
 external class TypeError(message: String?, fileName: String? = definedExternally, lineNumber: Int? = definedExternally) : Throwable
 
 fun box(): String {

@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 521
 // MODULE: main(module2)
 // FILE: main.kt
 

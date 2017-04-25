@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 853
 fun foo(arg: Any): Boolean {
     return arg == "x"
 }

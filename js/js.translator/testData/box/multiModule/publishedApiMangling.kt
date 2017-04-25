@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 1453
 // MODULE: lib
 // FILE: lib.kt
 class A {

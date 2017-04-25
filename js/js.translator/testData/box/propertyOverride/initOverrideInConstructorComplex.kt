@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 522
 // Test for KT-5673
 
 package foo

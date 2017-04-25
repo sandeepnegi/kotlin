@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 514
 // FILE: a.kt
 @file:JsModule("lib")
 @file:JsNonModule

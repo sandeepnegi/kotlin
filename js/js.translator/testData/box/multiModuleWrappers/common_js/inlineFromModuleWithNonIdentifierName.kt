@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 511
 // MODULE: #my-libr@ry
 // FILE: bar.kt
 // MODULE_KIND: COMMON_JS

@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 1169
 // KT-2468 ArrayList<String> is List<String> or HashSet<String> is Set<String> fails in generated JS code
 package foo
 

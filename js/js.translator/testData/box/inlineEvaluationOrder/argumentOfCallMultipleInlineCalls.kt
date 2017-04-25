@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 513
 package foo
 
 fun sum(a: Int, b: Int, c: Int, d: Int): Int {

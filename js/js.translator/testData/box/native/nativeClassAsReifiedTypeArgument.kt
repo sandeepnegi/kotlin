@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 507
 //FILE: nativeClassAsReifiedTypeArgument.kt
 
 var global = ""

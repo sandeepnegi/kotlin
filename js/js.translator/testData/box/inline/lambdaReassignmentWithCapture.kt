@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 521
 package foo
 
 data class IntPair(public var fst: Int, public var snd: Int)

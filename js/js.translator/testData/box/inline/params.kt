@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 514
 /*
  * Copy of JVM-backend test
  * Found at: compiler/testData/codegen/boxInline/simple/params.1.kt

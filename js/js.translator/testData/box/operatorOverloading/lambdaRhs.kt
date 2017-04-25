@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 855
 package foo
 
 var global = ""

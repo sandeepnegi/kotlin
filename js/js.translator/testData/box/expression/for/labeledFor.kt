@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 507
 package foo
 
 val a1 = arrayOfNulls<Int>(0)

@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 507
 class Point(val x: Int, val y: Int)
 
 fun box(): String {

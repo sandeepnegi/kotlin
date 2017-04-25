@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 861
 external fun p(m: String): String
 
 var log = ""

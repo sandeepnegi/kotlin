@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 511
 // Looks similar to KT-7674
 package foo
 

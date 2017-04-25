@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 523
 package foo
 
 // CHECK_NOT_CALLED: inline1

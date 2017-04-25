@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 865
 package foo
 
 data class A(val bar: Int)

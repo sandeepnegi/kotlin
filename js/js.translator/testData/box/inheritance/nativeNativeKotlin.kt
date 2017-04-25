@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 514
 // FILE: nativeNativeKotlin.kt
 
 package foo

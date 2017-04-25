@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 523
 package foo
 
 external interface NativeTrait {

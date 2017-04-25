@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 514
 package foo
 
 inline fun String.charCodeAt(i: Int): Int = asDynamic().charCodeAt(i)

@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 509
 package foo
 
 // CHECK_CONTAINS_NO_CALLS: doNothingInt

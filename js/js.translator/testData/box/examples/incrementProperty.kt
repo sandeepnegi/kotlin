@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 507
 class Slot() {
     var vitality: Int = 10000
 

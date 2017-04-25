@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 508
 package foo
 
 fun countKeys(a: Array<Int>): Int = js("""

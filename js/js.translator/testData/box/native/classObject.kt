@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 506
 package foo
 
 external class A(c: Int) {

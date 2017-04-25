@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 518
 // KT-4130 object fields are not evaluated correctly
 
 package foo

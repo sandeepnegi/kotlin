@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 518
 // KT-2388
 package foo
 

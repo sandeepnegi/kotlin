@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 509
 package foo
 
 fun callWithArgs(sumFunc: (Int, Int) -> Int, a: Int, b: Int): Int {

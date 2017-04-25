@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 507
 package foo
 
 // CHECK_NOT_CALLED: isInstance

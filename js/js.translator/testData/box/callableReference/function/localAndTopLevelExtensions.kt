@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 507
 package foo
 
 fun Int.sum0(other: Int): Int = this + other

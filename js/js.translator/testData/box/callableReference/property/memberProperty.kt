@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 522
 package foo
 
 open class A(var msg:String) {

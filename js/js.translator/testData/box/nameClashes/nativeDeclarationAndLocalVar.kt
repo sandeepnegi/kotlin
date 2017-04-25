@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 504
 package test
 
 external fun foo(): dynamic

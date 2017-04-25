@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 1180
 package foo
 
 fun testFor(expected: Int, d: dynamic, case: String) {

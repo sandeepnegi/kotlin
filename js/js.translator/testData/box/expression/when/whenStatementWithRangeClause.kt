@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 503
 // see KT-7683
 // WhenTranslator must recognize KtWhenConditionInRange for when statement
 package foo

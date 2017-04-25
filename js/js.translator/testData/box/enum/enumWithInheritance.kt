@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 568
 package foo
 
 enum class B(open val bar: Int) {

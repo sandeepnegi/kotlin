@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 520
 // MODULE: m3
 // FILE: m3.kt
 

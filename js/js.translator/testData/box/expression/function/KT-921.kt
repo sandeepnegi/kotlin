@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 865
 
 var log = ""
 

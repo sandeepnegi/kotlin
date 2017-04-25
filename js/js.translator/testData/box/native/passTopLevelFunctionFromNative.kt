@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 506
 package foo
 
 external fun nativeFun(i:Int, s:String): String = definedExternally

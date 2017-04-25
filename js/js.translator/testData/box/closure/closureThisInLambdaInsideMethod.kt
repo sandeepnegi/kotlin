@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 510
 // KT-4207 Closure this doesn't work in JS backend
 
 package foo

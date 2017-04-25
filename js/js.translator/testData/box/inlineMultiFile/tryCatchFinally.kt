@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 529
 /*
  * Copy of JVM-backend test
  * Found at: compiler/testData/codegen/boxInline/tryCatchFinally/tryCatchFinally.1.kt

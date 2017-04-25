@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 514
 package foo
 
 // CHECK_NOT_CALLED: multiplyFunInline

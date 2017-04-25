@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 509
 class Greeting {
     val noon = xrun {
         verb = "Hello"

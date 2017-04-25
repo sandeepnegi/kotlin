@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 507
 // FILE: castToTypeParamBoundedByNativeInterface.kt
 external interface I {
     fun foo(): String

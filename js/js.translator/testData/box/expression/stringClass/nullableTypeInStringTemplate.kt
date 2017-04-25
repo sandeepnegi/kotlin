@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 507
 // KT-2901 nullable type in string template
 package foo
 

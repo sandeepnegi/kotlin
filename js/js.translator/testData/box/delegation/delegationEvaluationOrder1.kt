@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 531
 package foo
 
 interface Base {

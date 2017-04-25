@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 515
 package foo
 
 fun test(fn: Any?): Function0<Int> =

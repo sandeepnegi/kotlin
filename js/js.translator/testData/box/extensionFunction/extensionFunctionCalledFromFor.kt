@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 621
 package foo
 
 class SimpleEnumerator {

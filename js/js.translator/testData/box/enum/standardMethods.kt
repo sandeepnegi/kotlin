@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 904
 package foo
 
 enum class EmptyEnum

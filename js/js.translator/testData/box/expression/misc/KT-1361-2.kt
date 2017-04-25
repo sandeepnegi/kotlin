@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 522
 package foo
 
 class Data(val rawData: Array<Int>, val width: Int, val height: Int) {

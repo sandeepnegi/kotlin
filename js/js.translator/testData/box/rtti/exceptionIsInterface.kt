@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 509
 interface I
 
 class MyException: Exception(), I

@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 508
 package foo
 
 // CHECK_NOT_CALLED: testLabelInline

@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 552
 package foo
 
 // CHECK_CONTAINS_NO_CALLS: capturedInLambda

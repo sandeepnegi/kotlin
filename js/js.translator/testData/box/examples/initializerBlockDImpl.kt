@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 849
 
 class World() {
     public val items: ArrayList<Item> = ArrayList<Item>()

@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 525
 // MODULE: lib
 // FILE: lib.kt
 

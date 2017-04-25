@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 514
 private fun `+`(a: Int, b: Int) = a + b
 
 @JsName("minus")

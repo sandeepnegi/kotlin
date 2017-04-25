@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 509
 // MODULE: #my-libr@ry
 // FILE: bar.kt
 // MODULE_KIND: PLAIN

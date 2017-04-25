@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 542
 package foo
 
 fun testSize(expectedSize: Int, vararg i: Int): Boolean {

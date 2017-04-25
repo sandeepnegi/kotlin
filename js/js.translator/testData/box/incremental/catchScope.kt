@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 503
 // FILE: a.kt
 
 inline fun baz(): String =

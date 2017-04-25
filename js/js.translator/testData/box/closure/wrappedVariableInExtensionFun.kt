@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 504
 package foo
 
 fun Any.foo(n: Int): () -> Boolean {

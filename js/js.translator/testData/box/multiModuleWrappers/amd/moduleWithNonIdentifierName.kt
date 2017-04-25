@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 511
 // MODULE: module-1
 // FILE: bar.kt
 // MODULE_KIND: AMD

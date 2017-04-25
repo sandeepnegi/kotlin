@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 511
 package foo
 
 /* This tests checks, that lambda fabric invocation is not extracted.

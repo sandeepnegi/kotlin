@@ -1,3 +1,4 @@
+// MINIFICATION_THRESHOLD: 567
 package foo
 
 import kotlin.reflect.KProperty
