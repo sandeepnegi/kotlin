@@ -77,10 +77,11 @@ private fun computeAnnotations(lightModifierList: KtLightModifierList<*>): List<
 }
 
 private fun lightAnnotationsForEntries(lightModifierList: KtLightModifierList<*>): List<KtLightAnnotationForSourceEntry> {
-    val annotatedKtDeclaration = lightModifierList.parent.kotlinOrigin as? KtDeclaration
+    val lightModifierListOwner = lightModifierList.parent
+    val annotatedKtDeclaration = lightModifierListOwner.kotlinOrigin as? KtDeclaration
     if (annotatedKtDeclaration == null || !annotatedKtDeclaration.isValid) return emptyList()
 
-    return getAnnotationDescriptors(annotatedKtDeclaration, lightModifierList).map { descriptor ->
+    return getAnnotationDescriptors(annotatedKtDeclaration, lightModifierListOwner).map { descriptor ->
         val annotationFqName = descriptor.type.constructor.declarationDescriptor?.fqNameUnsafe?.asString() ?: return emptyList()
         val entry = descriptor.source.getPsi() as? KtAnnotationEntry ?: return emptyList()
         KtLightAnnotationForSourceEntry(annotationFqName, entry, lightModifierList) {

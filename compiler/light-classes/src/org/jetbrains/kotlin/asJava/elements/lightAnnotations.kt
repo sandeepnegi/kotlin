@@ -212,10 +212,10 @@ class KtLightEmptyAnnotationParameterList(parent: PsiElement) : KtLightElementBa
 }
 
 class KtLightNullabilityAnnotation(member: KtLightElement<*, PsiModifierListOwner>, parent: PsiElement) : KtLightAbstractAnnotation(parent, {
-    val modifierList = member.clsDelegate.modifierList
-    modifierList?.findAnnotation(Nullable::class.java.name) ?:
-    modifierList?.findAnnotation(NotNull::class.java.name) ?:
-    KtLightNonExistentAnnotation(member)
+    // searching for last because nullability annotations are generated after backend generates source annotations
+    member.clsDelegate.modifierList?.annotations?.findLast {
+        isNullabilityAnnotation(it.qualifiedName)
+    } ?: KtLightNonExistentAnnotation(member)
 }) {
     override val kotlinOrigin get() = null
     override fun <T : PsiAnnotationMemberValue?> setDeclaredAttributeValue(attributeName: String?, value: T?) = cannotModify()
@@ -228,3 +228,7 @@ class KtLightNullabilityAnnotation(member: KtLightElement<*, PsiModifierListOwne
 }
 
 private fun cannotModify(): Nothing = error("Cannot modify") // TODO: meaningful message?
+
+internal fun isNullabilityAnnotation(qualifiedName: String?) = qualifiedName in backendNullabilityAnnotations
+
+private val backendNullabilityAnnotations = arrayOf(Nullable::class.java.name, NotNull::class.java.name)
