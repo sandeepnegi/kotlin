@@ -67,7 +67,8 @@ class KtLightSimpleModifierList(
 private fun computeAnnotations(lightModifierList: KtLightModifierList<*>): List<PsiAnnotation> {
     val annotationsForEntries = lightAnnotationsForEntries(lightModifierList)
     val modifierListOwner = lightModifierList.parent
-    if (modifierListOwner is KtLightMember<*> || modifierListOwner is KtLightParameter) {
+    if ((modifierListOwner is KtLightMember<*> && modifierListOwner !is KtLightFieldImpl.KtLightEnumConstant)
+        || modifierListOwner is KtLightParameter) {
         return annotationsForEntries +
                @Suppress("UNCHECKED_CAST")
                listOf(KtLightNullabilityAnnotation(modifierListOwner as KtLightElement<*, PsiModifierListOwner>, lightModifierList))
