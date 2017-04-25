@@ -78,6 +78,8 @@ abstract class BasicBoxTest(
     protected open fun getOutputPrefixFile(testFilePath: String): File? = null
     protected open fun getOutputPostfixFile(testFilePath: String): File? = null
 
+    protected open val runMinifierByDefault: Boolean = false
+
     fun doTest(filePath: String) {
         doTest(filePath, "OK", MainCallParameters.noCall())
     }
@@ -160,8 +162,22 @@ abstract class BasicBoxTest(
 
             performAdditionalChecks(generatedJsFiles.map { it.first }, outputPrefixFile, outputPostfixFile)
 
-            minifyAndRun(File(File(outputDir, "min"), file.nameWithoutExtension), allJsFiles, generatedJsFiles, expectedResult,
-                         mainModuleName, testFactory.testPackage, TEST_FUNCTION, withModuleSystem)
+            val minificationThresholdMatcher = MINIFICATION_THRESHOLD.matcher(fileContent)
+            val minificationThresholdFound = minificationThresholdMatcher.find()
+            if ((runMinifierByDefault || minificationThresholdFound) && !SKIP_MINIFICATION.matcher(fileContent).find()) {
+                val threshold = if (!minificationThresholdFound) {
+                    if (!System.getProperty("kotlin.js.generateThreshold", "false").toBoolean()) {
+                        fail("Minification threshold was not set")
+                    }
+                    -1
+                }
+                else {
+                    minificationThresholdMatcher.group(1).toInt()
+                }
+
+                minifyAndRun(File(File(outputDir, "min"), file.nameWithoutExtension), allJsFiles, generatedJsFiles, expectedResult,
+                             mainModuleName, testFactory.testPackage, TEST_FUNCTION, withModuleSystem, threshold, file)
+            }
         }
     }
 
@@ -407,7 +423,8 @@ abstract class BasicBoxTest(
 
     private fun minifyAndRun(
             workDir: File, allJsFiles: List<String>, generatedJsFiles: List<Pair<String, TestModule>>,
-            expectedResult: String, testModuleName: String, testPackage: String?, testFunction: String, withModuleSystem: Boolean
+            expectedResult: String, testModuleName: String, testPackage: String?, testFunction: String, withModuleSystem: Boolean,
+            threshold: Int, sourceFile: File
     ) {
         val kotlinJsLib = DIST_DIR_JS_PATH + "kotlin.js"
         val kotlinTestJsLib = DIST_DIR_JS_PATH + "kotlin-test.js"
@@ -429,8 +446,17 @@ abstract class BasicBoxTest(
         )
         val allFilesToMinify = filesToMinify.values + kotlinJsInputFile + kotlinTestJsInputFile
         val reachableNodes = DeadCodeElimination.run(allFilesToMinify, additionalReachableNodes) {  }
-        if (reachableNodes.size > 1500) println("!!!")
-        println(reachableNodes.size.toString() + ": " + workDir.path)
+        if (reachableNodes.size > threshold) {
+            if (threshold >= 0) {
+                fail("DCE marked ${reachableNodes.size} as reachable, while threshold was ${threshold}")
+            }
+            else {
+                val sourceFileContent = FileUtil.loadFile(sourceFile)
+                val suggestedThreshold = reachableNodes.size * 11 / 10
+                val prefix = "// MINIFICATION_THRESHOLD: $suggestedThreshold\n"
+                FileUtil.writeToFile(sourceFile, prefix + sourceFileContent)
+            }
+        }
 
         val runList = mutableListOf<String>()
         runList += kotlinJsLibOutput
@@ -541,6 +567,8 @@ abstract class BasicBoxTest(
         private val NO_MODULE_SYSTEM_PATTERN = Pattern.compile("^// *NO_JS_MODULE_SYSTEM", Pattern.MULTILINE)
         private val NO_INLINE_PATTERN = Pattern.compile("^// *NO_INLINE *$", Pattern.MULTILINE)
         private val SKIP_NODE_JS = Pattern.compile("^// *SKIP_NODE_JS *$", Pattern.MULTILINE)
+        private val SKIP_MINIFICATION = Pattern.compile("^// *SKIP_MINIFICATION *$", Pattern.MULTILINE)
+        private val MINIFICATION_THRESHOLD = Pattern.compile("^// *MINIFICATION_THRESHOLD: *([0-9]+) *$", Pattern.MULTILINE)
         private val RECOMPILE_PATTERN = Pattern.compile("^// *RECOMPILE *$", Pattern.MULTILINE)
         private val AST_EXTENSION = "jsast"
         private val METADATA_EXTENSION = "jsmeta"
